@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ <mapper namespace="userMapper">
+    <!--启用二级缓存-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+<!--根据用户名或者邮箱,和密码判断是否可以登录-->
+    <select id="findUserByLogin" parameterType="cn.edu.aust.entity.User" resultType="cn.edu.aust.entity.User">
+        SELECT *
+        FROM user u WHERE (username = #{username} or email = #{username}) AND password = #{password}
+    </select>
+    <!--查找用户排名类-->
+    <select id="findUserRank" parameterType="cn.edu.aust.util.PageUtil" resultType="cn.edu.aust.entity.User">
+        SELECT u.id,u.username,u.nickname,u.submit,u.solved,u.blog,u.blogname
+        FROM user u
+        <where>
+            <if test="search != null">
+                u.username LIKE #{search} or u.nickname LIKE #{search} or u.blogname LIKE #{search}
+            </if>
+        </where>
+        ORDER BY u.solved DESC ,u.submit DESC
+    </select>
+    <!--获取一个用户的信息-->
+    <select id="findUserDetail" parameterType="int" resultType="cn.edu.aust.entity.User">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+    <!--得到一个用户AC的所有题目-->
+    <select id="findUserACPro" parameterType="int" resultType="int">
+        SELECT s.problem_id FROM user u,solution s WHERE u.id=s.user_id AND s.verdict=5 AND s.contest_id = 0 AND u.id = #{id}
+    </select>
+    <!--得到一个用户正在解决的题目-->
+    <select id="findUserBeingAC" parameterType="int" resultType="int">
+        SELECT DISTINCT s.problem_id FROM user u,solution s WHERE u.id=s.user_id AND s.verdict!=5 AND s.contest_id = 0 AND s.verdict!=0 AND u.id=#{id}
+    </select>
+    <!--根据id修改用户-->
+    <update id="updateUserById" parameterType="cn.edu.aust.entity.User">
+        UPDATE user SET nickname=#{nickname},school=#{school},language=#{language},motto=#{motto},blogname=#{blogname},blog=#{blog} WHERE id = #{id}
+    </update>
+    <!--根据id修改用户头像路径-->
+    <update id="updateImgById" parameterType="cn.edu.aust.entity.User">
+        UPDATE user SET user.avatar=#{avatar} WHERE id = #{id}
+    </update>
+    <!--根据id修改用户最近登录时间-->
+    <update id="updateDateById" parameterType="int">
+        update user set lastlogin = now() where id=#{id}
+    </update>
+    <!--根据是否展示查询出首页展示的用户-->
+    <select id="findUserToShow" resultType="cn.edu.aust.entity.User">
+        SELECT u.id,u.nickname,u.avatar,u.honor FROM user u WHERE u.show = 1 limit 6
+    </select>
+    <!--根据用户名判断一个用户是否存在-->
+    <select id="judgeUserByName" parameterType="string" resultType="cn.edu.aust.entity.User">
+        SELECT * FROM user WHERE username = #{username}
+    </select>
+    <!--插入一个新的用户-->
+    <insert id="addUser" parameterType="cn.edu.aust.entity.User">
+        INSERT user (username,password,email) VALUE (#{username},#{password},#{email})
+    </insert>
+</mapper>

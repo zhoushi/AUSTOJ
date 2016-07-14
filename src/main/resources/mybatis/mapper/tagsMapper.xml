@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tagsMapper">
+    <!--启用二级缓存-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    <!--查找全部的目录-->
+    <select id="findAsideTags" resultType="cn.edu.aust.entity.Tags">
+        SELECT * FROM tags ORDER by tags.count DESC limit 30
+    </select>
+    <!--判断是否存在当前tags-->
+    <select id="findTagByName" parameterType="string" resultType="cn.edu.aust.entity.Tags">
+        SELECT * FROM tags WHERE tag=#{value}
+    </select>
+    <!--更新一个tag-->
+    <update id="updateTagById" parameterType="cn.edu.aust.entity.Tags">
+        UPDATE tags SET count=#{count} WHERE id = #{id};
+    </update>
+    <!--插入一个tag-->
+    <insert id="addTag" parameterType="string">
+        INSERT INTO tags VALUES (NULL,#{tag},0)
+    </insert>
+</mapper>

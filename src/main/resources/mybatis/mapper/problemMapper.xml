@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="problemMapper">
+    <!--启用二级缓存-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    <!--sql片段查询显示列表的字段-->
+    <sql id="query_problem_table">
+        SELECT p.problem_id,p.title,p.tag,p.stage,p.accepted,p.solved,p.submit,p.submit_user,p.catelog
+        FROM problem p
+    </sql>
+    <sql id="query_problem_detail">
+        SELECT p.problem_id,p.title,p.description,p.input,p.output,p.sample_input,p.sample_output,p.tag,p.hint,
+                p.time_limit,p.memory_limit,p.author,p.author_id
+        FROM problem p
+    </sql>
+
+    <!--查找对应阶段的全部题目-->
+    <select id="findStageProblem" parameterType="cn.edu.aust.util.PageUtil" resultType="cn.edu.aust.entity.Problem">
+        <include refid="query_problem_table"/>
+        WHERE p.contest_id=0
+            <if test="stage != 0">
+               and p.stage = #{stage}
+            </if>
+            <if test="stage == 0">
+                1=1
+            </if>
+            <if test="search != null">
+                and (p.problem_id LIKE #{search} or p.title LIKE #{search} or p.tag LIKE #{search})
+            </if>
+        ORDER BY p.problem_id ${order}
+    </select>
+    <!--查找出对应目录的全部题目-->
+    <select id="findCateProblem" parameterType="cn.edu.aust.util.PageUtil" resultType="cn.edu.aust.entity.Problem">
+        <include refid="query_problem_table"/>
+        WHERE p.contest_id=0
+            <if test="stage != 0">
+                p.catelog = #{stage}
+            </if>
+            <if test="stage == 0">
+                1=1
+            </if>
+            <if test="search != null">
+                and (p.problem_id LIKE #{search} or p.title LIKE #{search} or p.tag LIKE #{search})
+            </if>
+        ORDER BY p.problem_id ${order}
+    </select>
+    <!--查找出一个题目的详细信息-->
+    <select id="findProblemById" parameterType="int" resultType="cn.edu.aust.entity.Problem">
+        <include refid="query_problem_detail"/> WHERE problem_id = #{id} AND contest_id = 0
+    </select>
+</mapper>

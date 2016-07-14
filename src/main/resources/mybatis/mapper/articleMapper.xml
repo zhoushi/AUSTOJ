@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="articleMapper">
+    <!--启用二级缓存-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    <!--查找侧边栏展示的目录-->
+    <select id="findAsideArticle" resultType="cn.edu.aust.entity.Article">
+        SELECT id,title FROM article ORDER by start_time DESC limit 7
+    </select>
+    <!--查找用于列表展示的文章-->
+    <select id="findAllArticle" parameterType="cn.edu.aust.util.PageUtil" resultType="cn.edu.aust.entity.Article">
+        SELECT a.id,a.title,a.user_id,a.nickname,a.summary,a.tags,a.start_time,a.catelog,a.totop FROM article a
+        <where>
+            <if test="search != null">
+                a.title LIKE #{search} or a.catelog LIKE #{search} or a.tags LIKE #{search}
+            </if>
+        </where>
+        ORDER BY a.totop DESC
+    </select>
+    <!--根据id查找出具体的文章-->
+    <select id="findArticleById" parameterType="int" resultType="cn.edu.aust.entity.Article">
+        SELECT * FROM article a WHERE a.id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="contestMapper">
+    <!--启用二级缓存-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+    <!--sql片段-->
+    <sql id="findContestList">
+        SELECT c.contest_id,c.title,c.start_time,c.end_time,c.type,c.defunct FROM contest c
+    </sql>
+    <!--查找出有效的比赛-->
+    <select id="findContestByvalid" resultType="cn.edu.aust.entity.Contest">
+        <include refid="findContestList"/>
+        WHERE (now() BETWEEN start_time AND end_time) or c.defunct = 1
+    </select>
+    <!--查找出无效的比赛-->
+    <select id="findContestByInvalid" resultType="cn.edu.aust.entity.Contest">
+        <include refid="findContestList"/>
+         WHERE (c.end_time &lt;= now()) or c.defunct = 0
+    </select>
+    <!--根据id查询一个比赛-->
+    <select id="findContestById" parameterType="int" resultType="cn.edu.aust.entity.Contest">
+        SELECT * FROM contest WHERE contest_id=#{id}
+    </select>
+    <!--根据id查询一个比赛下的题目-->
+    <select id="findCPList" parameterType="int" resultType="cn.edu.aust.entity.ContestProblem">
+        SELECT * FROM contest_problem WHERE contest_id=#{id}
+    </select>
+    <!--设置一个竞赛无效-->
+    <update id="updateDefunct" parameterType="int">
+        UPDATE contest SET defunct = 0 WHERE contest_id = #{id}
+    </update>
+    <!--查找出一个用户做过的竞赛题-->
+    <select id="findUserACcon" parameterType="hashmap" resultType="string">
+        SELECT c.num FROM solution s,contest_problem c
+          WHERE s.problem_id = c.problem_id AND s.contest_id =#{contest_id} AND s.verdict = 5 AND s.user_id=#{id}
+    </select>
+    <!--根据竞赛id和题目id查询出相应的比赛题目-->
+    <select id="findProblemById" parameterType="hashmap" resultType="cn.edu.aust.entity.Problem">
+        SELECT p.problem_id,p.title,p.description,p.input,p.output,p.sample_input,p.sample_output,p.tag,p.hint,
+                p.time_limit,p.memory_limit,p.author,p.author_id
+        FROM problem p
+        WHERE problem_id = #{problem_id} AND contest_id = #{contest_id}
+    </select>
+</mapper>
