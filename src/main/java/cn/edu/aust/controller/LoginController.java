@@ -58,42 +58,33 @@ public class LoginController {
         if (br.hasErrors()) {
             throw new MyException("请误尝试非法登录");
         }
-        //去掉空格
-        user.setUsername(user.getUsername().trim());
-        user.setPassword(user.getPassword().trim());
         //验证码验证
         String code = (String) session.getAttribute("codeValidate");
         if (!StringUtils.equalsIgnoreCase(code, codevalidate)) {
             attr.addFlashAttribute("error", "验证码错误");
             return "redirect:/login";
         }
+        //验证账户
+        user.setUsername(user.getUsername().trim());
+        user.setPassword(user.getPassword().trim());
         user.setPassword(DecriptUtil.SHA1(user.getPassword().trim()));
-        //添加到要显示的信息中
-        attr.addFlashAttribute("username", user.getUsername().trim());
-        try {
-            user = userService.findUserByLogin(user);
-        } catch (Exception e) {
-            throw new MyException("查询用户登录权限出错", e);
-        }
+        user = userService.findUserByLogin(user);
         if (user == null) {
             attr.addFlashAttribute("error", "用户名或密码错误");
             return "redirect:/login";
         }
         //登录成功加入session
         session.setAttribute("userLogin", user);
-
         logger.info(user.getUsername()+"已登录");
-
+        //获取用户做过的题目,并更新登录时间
         try {
-            //获取用户做过的题目
             List<Integer> userAC = userService.findUserACPro(user.getId());
             session.setAttribute("userAC", userAC);
-            //更新登录时间
             userService.updateDateById(user.getId());
         } catch (Exception e) {
             throw new MyException("查询用户用户相关题目信息出错", e);
         }
-        //跳转到用户之前的页面
+        //跳转到之前的页面
         String redirect = (String) session.getAttribute("referer");
         return StringUtils.isNotEmpty(redirect)?("redirect:" + redirect):("redirect:/user/" + user.getId());
     }
@@ -144,7 +135,7 @@ public class LoginController {
             attr.addFlashAttribute("error", "两次输入密码不一致");
             return "redirect:/register";
         }
-        //到这开始插入用户
+        //插入用户
         user.setPassword(DecriptUtil.SHA1(user.getPassword().trim()));
         userService.addUser(user);
         logger.info("用户" + user.getUsername() + "已注册");

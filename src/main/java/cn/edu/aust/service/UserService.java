@@ -29,7 +29,7 @@ public class UserService implements InitializingBean{
      * @param pageUtil
      * @return
      */
-    public List<User> findUserRank(PageUtil pageUtil) throws Exception {
+    public List<User> findUserRank(PageUtil pageUtil){
         return userDao.findUserRank(pageUtil);
     }
 
@@ -38,7 +38,7 @@ public class UserService implements InitializingBean{
      * @param id
      * @return
      */
-    public User findUserById(int id) throws Exception {
+    public User findUserById(int id) {
         return userDao.findUserById(id);
     }
 
@@ -47,7 +47,7 @@ public class UserService implements InitializingBean{
      * @param id
      * @return
      */
-    public List<Integer> findUserACPro(int id) throws Exception{
+    public List<Integer> findUserACPro(int id) {
         return userDao.findUserACPro(id);
     }
     /**
@@ -55,7 +55,7 @@ public class UserService implements InitializingBean{
      * @param id
      * @return
      */
-    public List<Integer> findUserBeingAC(int id) throws Exception{
+    public List<Integer> findUserBeingAC(int id){
         return userDao.findUserBeingAC(id);
     }
     /**
@@ -63,7 +63,7 @@ public class UserService implements InitializingBean{
      * @param user
      * @return
      */
-    public User findUserByLogin(User user) throws Exception{
+    public User findUserByLogin(User user){
         return userDao.findUserByLogin(user);
     }
     /**
@@ -71,7 +71,7 @@ public class UserService implements InitializingBean{
      * @param user
      * @return
      */
-    public boolean updateUserById(User user) throws Exception{
+    public boolean updateUserById(User user){
         return userDao.updateUserById(user);
     }
     /**
@@ -79,7 +79,7 @@ public class UserService implements InitializingBean{
      * @param user
      * @return
      */
-    public boolean updateImgById(User user) throws Exception{
+    public boolean updateImgById(User user){
         return userDao.updateImgById(user);
     }
     /**
@@ -87,7 +87,7 @@ public class UserService implements InitializingBean{
      * @param id
      * @return
      */
-    public boolean updateDateById(int id) throws Exception{
+    public boolean updateDateById(int id){
         return userDao.updateDateById(id);
     }
     /**
@@ -95,7 +95,7 @@ public class UserService implements InitializingBean{
      * @param username
      * @return
      */
-    public boolean findUserByName(String username) throws Exception{
+    public boolean findUserByName(String username){
        return userDao.findUserByName(username);
     }
     /**
@@ -103,7 +103,7 @@ public class UserService implements InitializingBean{
      * @param user
      * @return
      */
-    public boolean addUser(User user) throws Exception{
+    public boolean addUser(User user){
         return userDao.addUser(user);
     }
     /**
