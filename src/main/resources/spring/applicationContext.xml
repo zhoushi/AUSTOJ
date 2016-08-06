@@ -3,6 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:beans="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
     <!-- 启用注解 -->
@@ -65,12 +66,24 @@
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg ref="sqlSessionFactory" />
     </bean>
+    <!--ehcache配置-->
+    <!--配置ehcache的cacheManager-->
+    <bean id="cacheManagerFactory"
+          class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+          p:configLocation="classpath:ehcache.xml"
+          p:cacheManagerName="cacheManager"
+    />
+    <!--配置基于ehcache的缓存管理器,
+        并把ehcache的cacheManager注入到Spring的EhCacheCacheManager-->
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheFactoryBean"
+          p:cacheManager-ref="cacheManagerFactory"
+    />
+    <!--ehcache配置结束-->
 
-    <!--配置事务管理 -->
+        <!--配置事务管理 -->
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="delete*" propagation="REQUIRED" read-only="false"
@@ -81,17 +94,13 @@
                        rollback-for="java.lang.Exception" />
             <tx:method name="save*" propagation="REQUIRED" read-only="false"
                        rollback-for="java.lang.Exception" />
-            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
             <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
             <tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
-            <tx:method name="load*" propagation="SUPPORTS" read-only="true"/>
             <tx:method name="search*" propagation="SUPPORTS" read-only="true"/>
             <tx:method name="datagrid*" propagation="SUPPORTS" read-only="true"/>
         </tx:attributes>
     </tx:advice>
-
-
-    <!-- 事物处理 -->
+    <!-- 事务处理 -->
     <aop:config>
         <aop:pointcut id="pc" expression="execution(* cn.edu.aust.dao..*(..))" />
         <aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />

@@ -38,7 +38,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/userRank",method = RequestMethod.POST)
-    public @ResponseBody Map<String,Object> findUserRank(@RequestBody PageUtil pageUtil){
+    public @ResponseBody Map<String,Object> findUserRank(@RequestBody PageUtil pageUtil) throws Exception {
         Map<String,Object> maps = new HashMap<>();
         PageHelper.startPage(pageUtil.getOffset()/pageUtil.getLimit()+1,pageUtil.getLimit());
         List<User> lists = userDao.findUserRank(pageUtil);
@@ -54,13 +54,13 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public ModelAndView UserDeatil(@PathVariable("id") int id){
+    public ModelAndView UserDeatil(@PathVariable("id") int id) throws Exception {
         ModelAndView model = new ModelAndView();
         model.setViewName("user");
         if (id <= 0){
             model.addObject("error","该用户不存在");
         }else {
-            User user = userDao.findUserDetail(id);
+            User user = userDao.findUserById(id);
             List<Integer> userAC = userDao.findUserACPro(id);
             List<Integer> userBeingAC = userDao.findUserBeingAC(id);
             userBeingAC.removeAll(userAC);
@@ -77,18 +77,18 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public ModelAndView updateUser(User user, HttpSession session){
+    public ModelAndView updateUser(User user, HttpSession session) throws Exception {
         ModelAndView model = new ModelAndView();
         User loginUser = (User) session.getAttribute("userLogin");
         if (loginUser.getId() != user.getId()){
-            model.setViewName("404");
+            model.setViewName("error");
             return model;
         }
         if (!userDao.updateUserById(user)){
             logger.error("用户自助更新用户资料失败:"+user.getUsername());
         }
         //更新session
-        user  = userDao.findUserDetail(user.getId());
+        user  = userDao.findUserById(user.getId());
         session.setAttribute("userLogin",user);
         model.setViewName("redirect:/user/"+user.getId());
         return model;
@@ -102,11 +102,11 @@ public class UserController {
         ModelAndView model = new ModelAndView();
         User loginUser = (User) session.getAttribute("userLogin");
         if (user.getId() != loginUser.getId()){
-            model.setViewName("404");
+            model.setViewName("error");
             return model;
         }
         if (pictureFile.getSize()>1242880){
-            model.setViewName("404");
+            model.setViewName("error");
             model.addObject("error","图片尺寸过大,无法上传");
             return model;
         }
@@ -119,11 +119,13 @@ public class UserController {
             user.setAvatar("/uploadimg/"+fileName);
             userDao.updateImgById(user);
             //更新session
-            loginUser = userDao.findUserDetail(user.getId());
+            loginUser = userDao.findUserById(user.getId());
             session.setAttribute("userLogin",loginUser);
             model.setViewName("redirect:/user/"+user.getId());
         } catch (IOException e) {
             logger.error(user.getId()+"上传头像失败",e);
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return model;

@@ -46,10 +46,10 @@ public class CodeController {
         //得到画笔
         Graphics g = buffImg.getGraphics();
         //1.设置颜色,画边框
-        g.setColor(Color.black);
+        g.setColor(new Color(0.4235f,0.5765f,0.5647f,1f));
         g.drawRect(0,0,width,height);
         //2.设置颜色,填充内部
-        g.setColor(Color.white);
+        g.setColor(new Color(0.4235f,0.5765f,0.5647f,1f));
         g.fillRect(1,1,width-2,height-2);
         //3.设置干扰线
         g.setColor(Color.gray);
@@ -59,11 +59,11 @@ public class CodeController {
         //4.设置验证码
         g.setColor(Color.blue);
         //4.1设置验证码字体
-        g.setFont(new Font("宋体",Font.BOLD|Font.ITALIC,15));
+        g.setFont(new Font("宋体",Font.BOLD|Font.ITALIC,30));
         for (int i = 0; i < codeCount; i++) {
             char c = codeSequence[r.nextInt(codeSequence.length)];
             builderCode.append(c);
-            g.drawString(c+"",15*(i+1),15);
+            g.drawString(c+"",15*(i+1),30);
         }
         //5.输出到屏幕
         ServletOutputStream sos = response.getOutputStream();
@@ -78,7 +78,6 @@ public class CodeController {
         response.setContentType("image/png");
         //8.关闭sos
         sos.close();
-
     }
 
 }

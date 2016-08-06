@@ -15,12 +15,6 @@
     <!--log-->
     <slf4j.version>1.7.7</slf4j.version>
     <log4j.version>1.2.17</log4j.version>
-    <!--编码-->
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!--配置项目使用的java版本-->
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
   </properties>
 
 
@@ -81,6 +75,7 @@
       <version>${spring.version}</version>
     </dependency>
     <!-- springframe end -->
+
     <!--hibervate validate start-->
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -88,6 +83,7 @@
       <version>5.2.4.Final</version>
     </dependency>
     <!--hibervate validate end-->
+
     <!--cglib动态代理-->
     <dependency>
       <groupId>cglib</groupId>
@@ -95,6 +91,7 @@
       <version>3.2.2</version>
     </dependency>
     <!--cglib动态代理 end-->
+
     <!--aspectj start-->
     <dependency>
       <groupId>org.aspectj</groupId>
@@ -108,6 +105,7 @@
       <version>1.8.6</version>
     </dependency>
     <!--aspectj end-->
+
     <!--阿里druid配置 start-->
     <dependency>
       <groupId>com.alibaba</groupId>
@@ -115,6 +113,7 @@
       <version>1.0.19</version>
     </dependency>
     <!--阿里druid配置 end-->
+
     <!--servlet/jsp api start-->
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -130,6 +129,7 @@
       <scope>provided</scope>
     </dependency>
     <!--servlet/jsp api end-->
+
     <!--mybatis-->
     <dependency>
       <groupId>org.mybatis</groupId>
@@ -154,26 +154,34 @@
       <artifactId>mybatis-ehcache</artifactId>
       <version>1.0.0</version>
     </dependency>
+    <!--ehcache缓存-->
     <dependency>
       <groupId>net.sf.ehcache</groupId>
       <artifactId>ehcache-core</artifactId>
       <version>2.6.11</version>
     </dependency>
+    <!--web页面缓存-->
+    <!--<dependency>-->
+      <!--<groupId>net.sf.ehcache</groupId>-->
+      <!--<artifactId>ehcache-web</artifactId>-->
+      <!--<version>2.0.4</version>-->
+    <!--</dependency>-->
 
-    <!--mysql driver-->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.6</version>
     </dependency>
 
-    <!--jstl-->
+    <!--jstl start-->
     <dependency>
       <groupId>jstl</groupId>
       <artifactId>jstl</artifactId>
       <version>1.2</version>
     </dependency>
-    <!--文件上传组件-->
+    <!--jstl end-->
+
+    <!--文件上传组件 start-->
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
@@ -184,9 +192,14 @@
       <artifactId>commons-io</artifactId>
       <version>2.4</version>
     </dependency>
-
-    <!--文件上传组件结束-->
-
+    <!--文件上传组件 end-->
+    <!--common lang start-->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.3.2</version>
+    </dependency>
+    <!--common lang end-->
     <!-- log start -->
     <dependency>
       <groupId>log4j</groupId>
@@ -198,34 +211,24 @@
       <artifactId>slf4j-api</artifactId>
       <version>${slf4j.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
       <version>${slf4j.version}</version>
     </dependency>
-    <!-- 格式化对象，方便输出日志 -->
+    <!-- json解析工具 -->
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
       <version>1.1.41</version>
     </dependency>
-    <!-- 映射JSON -->
-    <!--<dependency>-->
-      <!--<groupId>org.codehaus.jackson</groupId>-->
-      <!--<artifactId>jackson-mapper-asl</artifactId>-->
-      <!--<version>1.9.13</version>-->
-    <!--</dependency>-->
-    <!--<dependency>-->
-      <!--<groupId>com.fasterxml.jackson.core</groupId>-->
-      <!--<artifactId>jackson-databind</artifactId>-->
-      <!--<version>2.7.4</version>-->
-    <!--</dependency>-->
-    <!--<dependency>-->
-      <!--<groupId>com.fasterxml.jackson.core</groupId>-->
-      <!--<artifactId>jackson-annotations</artifactId>-->
-      <!--<version>2.7.4</version>-->
-    <!--</dependency>-->
+
+    <!-- mail支持 -->
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4.7</version>
+    </dependency>
 
     <dependency>
       <groupId>junit</groupId>

@@ -143,7 +143,7 @@ public class ContestController {
         ModelAndView model = new ModelAndView();
         if (contest_id <= 0 || problem_id <= 0){
             model.addObject("error","错误的访问地址");
-            model.setViewName("404");
+            model.setViewName("error");
             return model;
         }
         //时间检验

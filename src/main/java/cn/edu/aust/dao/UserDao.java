@@ -21,7 +21,7 @@ public class UserDao {
      * @param pageUtil
      * @return
      */
-    public List<User> findUserRank(PageUtil pageUtil){
+    public List<User> findUserRank(PageUtil pageUtil) throws Exception{
         return sqlSessionTemplate.selectList("userMapper.findUserRank",pageUtil);
     }
     /**
@@ -29,8 +29,8 @@ public class UserDao {
      * @param id
      * @return
      */
-    public User findUserDetail(int id){
-        return sqlSessionTemplate.selectOne("userMapper.findUserDetail",id);
+    public User findUserById(int id) throws Exception{
+        return sqlSessionTemplate.selectOne("userMapper.findUserById",id);
     }
 
     /**
@@ -38,7 +38,7 @@ public class UserDao {
      * @param id
      * @return
      */
-    public List<Integer> findUserACPro(int id){
+    public List<Integer> findUserACPro(int id) throws Exception{
         return sqlSessionTemplate.selectList("userMapper.findUserACPro",id);
     }
 
@@ -47,7 +47,7 @@ public class UserDao {
      * @param id
      * @return
      */
-    public List<Integer> findUserBeingAC(int id){
+    public List<Integer> findUserBeingAC(int id) throws Exception{
         return sqlSessionTemplate.selectList("userMapper.findUserBeingAC",id);
     }
 
@@ -56,7 +56,7 @@ public class UserDao {
      * @param user
      * @return
      */
-    public User findUserByLogin(User user){
+    public User findUserByLogin(User user) throws Exception{
         return sqlSessionTemplate.selectOne("userMapper.findUserByLogin",user);
     }
 
@@ -65,7 +65,7 @@ public class UserDao {
      * @param user
      * @return
      */
-    public boolean updateUserById(User user){
+    public boolean updateUserById(User user) throws Exception{
         int k = sqlSessionTemplate.update("userMapper.updateUserById",user);
         return k>0;
     }
@@ -75,7 +75,7 @@ public class UserDao {
      * @param user
      * @return
      */
-    public boolean updateImgById(User user){
+    public boolean updateImgById(User user) throws Exception{
         int k = sqlSessionTemplate.update("userMapper.updateImgById",user);
         return k>0;
     }
@@ -85,7 +85,7 @@ public class UserDao {
      * @param id
      * @return
      */
-    public boolean updateDateById(int id){
+    public boolean updateDateById(int id) throws Exception{
         int k = sqlSessionTemplate.update("userMapper.updateDateById",id);
         return k>0;
     }
@@ -93,17 +93,17 @@ public class UserDao {
      * 查找出首页用于展示的用户列表
      * @return
      */
-    public List<User> findUserToShow(){
+    public List<User> findUserToShow() throws Exception{
         return sqlSessionTemplate.selectList("userMapper.findUserToShow");
     }
 
     /**
-     * 根据用户名判断用户是否存在
+     * 判断该用户名是否已用
      * @param username
      * @return
      */
-    public boolean judgeUserByName(String username){
-        User user = sqlSessionTemplate.selectOne("userMapper.judgeUserByName",username);
+    public boolean findUserByName(String username) throws Exception{
+        User user = sqlSessionTemplate.selectOne("userMapper.findUserByName",username);
         return user==null;
     }
 
@@ -112,7 +112,7 @@ public class UserDao {
      * @param user
      * @return
      */
-    public boolean addUser(User user){
+    public boolean addUser(User user) throws Exception{
         int k = sqlSessionTemplate.insert("userMapper.addUser",user);
         return k>0;
     }

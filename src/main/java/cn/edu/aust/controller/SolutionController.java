@@ -69,7 +69,7 @@ public class SolutionController {
         int solution_id = solutionDao.JudgePrepare(solution,solutionSource);
         if (solution_id <= 0){
             model.addObject("error","未知提交错误!");
-            model.setViewName("404");
+            model.setViewName("error");
             return model;
         }
         //启动判题客户端

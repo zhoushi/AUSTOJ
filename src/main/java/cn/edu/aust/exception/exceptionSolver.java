@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 自定义异常处理类
+ * 控制器端全局异常类捕捉
  */
 public class exceptionSolver implements HandlerExceptionResolver {
 
@@ -20,8 +20,8 @@ public class exceptionSolver implements HandlerExceptionResolver {
         logger.error("异常:",ex);
         logger.warn("==============异常结束=============");
         ModelAndView mv = new ModelAndView();
-        mv.addObject("exception", ex.toString().replaceAll("\n", "<br/>"));
-        mv.setViewName("404");
+        mv.addObject("error", ex.toString().replaceAll("\n", "<br/>"));
+        mv.setViewName("error");
         return mv;
     }
 }

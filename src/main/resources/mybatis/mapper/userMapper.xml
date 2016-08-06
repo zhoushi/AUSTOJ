@@ -20,7 +20,7 @@
         ORDER BY u.solved DESC ,u.submit DESC
     </select>
     <!--获取一个用户的信息-->
-    <select id="findUserDetail" parameterType="int" resultType="cn.edu.aust.entity.User">
+    <select id="findUserById" parameterType="int" resultType="cn.edu.aust.entity.User">
         SELECT * FROM user WHERE id = #{id}
     </select>
     <!--得到一个用户AC的所有题目-->
@@ -47,8 +47,8 @@
     <select id="findUserToShow" resultType="cn.edu.aust.entity.User">
         SELECT u.id,u.nickname,u.avatar,u.honor FROM user u WHERE u.show = 1 limit 6
     </select>
-    <!--根据用户名判断一个用户是否存在-->
-    <select id="judgeUserByName" parameterType="string" resultType="cn.edu.aust.entity.User">
+    <!--判断该用户名是否已用-->
+    <select id="findUserByName" parameterType="string" resultType="cn.edu.aust.entity.User">
         SELECT * FROM user WHERE username = #{username}
     </select>
     <!--插入一个新的用户-->

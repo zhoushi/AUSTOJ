@@ -1,6 +1,5 @@
 <%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,80 +9,92 @@
     <link rel="shortcut icon" href="${path}/static/images/favicon.ico">
     <link href="${path}/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="${path}/static/css/flat-ui.min.css" rel="stylesheet">
-    <link href="${path}/static/css/animate.min.css" rel="stylesheet">
-    <link href="${path}/static/css/app.css" rel="stylesheet">
+    <link href="${path}/static/css/login.css" rel="stylesheet">
     <style>
-        td{
-            padding: 10px 5px;
+        .toolmsg{
+            position: fixed;
+            margin-top: 5px;
+            margin-left: 10px;
         }
     </style>
 </head>
-<body  style="overflow-x: hidden">
-    <div class="bg-one" style="height: 100vh">
-        <div class="container-fluid text-center animated fadeInDown" style="margin-top: 5%">
-            <h1 class="logo-name">AUST</h1>
-            <h3>欢迎使用 Aust Code</h3>
+<body >
+    <div class="small-home">
+        <a href="/index" class="text-center"><i class="glyphicon glyphicon-home"></i></a>
+    </div>
+    <div class="bg-one">
+        <div class="container-fluid text-center animated fadeInDown">
+            <h1 class="login-logo">AUST</h1>
         </div>
+        <h6 class="text-danger text-center">${error}</h6>
         <div class="row animated fadeInUp">
-            <div class="col-lg-12 text-center">
+            <div class="login-field">
                 <form role="form" style="margin-top: 20px" action="/register" method="post">
-                    <table style="margin: 20px auto;min-width: 33vw">
-                        <tr>
-                            <td width="25%" class="text-right"><strong>用户名:</strong>&nbsp;&nbsp;</td>
-                            <td width="50%"><input type="text" class="form-control" placeholder="用户名" required minlength="3" maxlength="30" name="username" value="${username}"></td>
-                            <td width="20%" class="text-danger text-left">*${username}</td>
-                        </tr>
-                        <tr>
-                            <td width="25%" class="text-right"><strong>邮箱:</strong>&nbsp;&nbsp;</td>
-                            <c:if test="${signEmail != null}">
-                                <td width="50%"><input type="email" class="form-control" placeholder="example@XX.com" required name="email" value="${signEmail}"></td>
-                            </c:if>
-                            <c:if test="${signEmail == null}">
-                                <td width="50%"><input type="email" class="form-control" placeholder="example@XX.com" required name="email" value="${email}"></td>
-                            </c:if>
-                            <td width="25%" class="text-danger text-left">*${email}</td>
-                        </tr>
-                        <tr>
-                            <td width="25%" class="text-right"><strong>密码:</strong>&nbsp;&nbsp;</td>
-                            <td width="50%"><input type="password"  class="form-control" placeholder="Password" minlength="6" maxlength="30" required name="password" id="password"></td>
-                            <td width="20%" class="text-danger text-left">*${password}</td>
-                        </tr>
-                        <tr>
-                            <td width="25%" class="text-right"><strong>确认密码:</strong>&nbsp;&nbsp;</td>
-                            <td width="50%"><input type="password" class="form-control" placeholder="Password" minlength="6" maxlength="30" required name="password2" id="password2" onblur="check(this)"></td>
-                            <td width="20%" class="text-danger text-left passowrd2">*${password2}</td>
-                        </tr>
-                        <tr>
-                            <td width="25%" class="text-right"><strong>验证码:</strong>&nbsp;&nbsp;</td>
-                            <td width="50%" class="text-left">
-                                <input type="text" class="form-control" required name="codevalidate" style="width: 40%;display: inline">
-                                <img id="codevalidate" src="/code/<%=new Date().getTime()%>" width="90" height="30" style="margin-left: 10px" onclick="changeUrl()">
-                            </td>
-                            <td width="20%" class="text-danger text-left passowrd2">*${codeerror}</td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"></td>
-                            <td class="text-left">
-                                <a href="/login" class="btn btn-primary">登&nbsp;&nbsp;录</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <button type="submit" class="btn btn-primary">注&nbsp;&nbsp;册</button>
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="input-group form-group">
+                        <span class="input-group-addon glyphicon glyphicon-user"></span>
+                        <input type="text" class="form-control" placeholder="Username" id="username"
+                               required name="username" value="${username}" minlength="3" maxlength="20" onchange="checkuser(this)">
+                        <span class="text-danger toolmsg username">*</span>
+                    </div>
+                    <div class="input-group form-group">
+                        <span class="input-group-addon glyphicon glyphicon-comment"></span>
+                        <input type="email" class="form-control" placeholder="example@XX.com" required name="email" value="${email}">
+                        <span class="text-danger toolmsg">*</span>
+                    </div>
+                    <div class="input-group form-group">
+                        <span class="input-group-addon glyphicon glyphicon-lock"></span>
+                        <input type="password" class="form-control"
+                               placeholder="Password" required name="password" minlength="6" maxlength="30" id="password">
+                        <span class="text-danger toolmsg">*</span>
+                    </div>
+                    <div class="input-group form-group">
+                        <span class="input-group-addon glyphicon glyphicon-lock"></span>
+                        <input type="password" class="form-control"
+                               placeholder="Password" required name="password2" minlength="6" maxlength="30" id="password2" onchange="checkpwd(this)">
+                        <span class="text-danger toolmsg passowrd2">*</span>
+                    </div>
+                    <div class="code-inline">
+                        <input type="text" class="form-control code-input" required name="codevalidate">
+                        <img id="code-validate" src="/code/<%=new Date().getTime()%>" class="code-img" onclick="changeUrl()">
+                    </div>
+                    <div class="input-group">
+                        <a href="${pageContext.request.contextPath}/register" class="btn btn-primary">Register</a>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-primary sign-in">Sign in</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
     <script src="${path}/static/js/jquery.min.js"></script>
+
 <script>
-    function check(input){
+    function checkpwd(input){
         var password = $("#password").val();
         if (password != input.value){
-            $(".passowrd2").html('两次输入密码不一致');
+            $(".passowrd2").text('两次输入密码不一致');
             $("button[type='submit']").addClass('disabled');
         }else {
-            $(".passowrd2").html(' ');
+            $(".passowrd2").text('*');
             $("button[type='submit']").removeClass('disabled');
         }
+    }
+    function checkuser(input){
+        var username = $("#username").val();
+        $.ajax({
+            type: "POST",
+            url: 'check/'+username,
+            dataType:'json',
+            success: function(data){
+                if (!data){
+                    $(".username").text('*');
+                    $("button[type='submit']").removeClass('disabled');
+                }else {
+                    $(".username").text('用户名已被占用');
+                    $("button[type='submit']").addClass('disabled');
+
+                }
+            }
+        });
     }
     function changeUrl() {
         var url = $("#codevalidate").prop('src');

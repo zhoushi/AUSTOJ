@@ -1,3 +1,4 @@
+/*common start*/
 html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
@@ -13,6 +14,12 @@ body{
 }
 p,table{
     font-size: 1.6rem;
+}
+th{
+    text-align: center;
+}
+td{
+    padding: 3px 7px;
 }
 b, strong {
     font-weight: bolder;
@@ -40,6 +47,26 @@ h5 {
 h6 {
     font-size: 1.6rem;
 }
+/*common end*/
+
+/*通知栏 start*/
+.tips{
+    margin-top: -25px;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+.tips .tips-bg{
+    position: relative;
+    padding: 5px;
+}
+.tips .tips-bulls{
+    position: absolute;
+    left: 34px;
+    top: 6px;
+}
+/*通知栏 end*/
+
+/*header start*/
 header a{
     color: #fff;
 }
@@ -49,15 +76,10 @@ background-color: rgba(255,255,255,0.9);
 .navbar-default{
     background-color: rgba(236, 240, 241,.5);
 }
-/*每一个页面须知下面的字体设计*/
+
+/*header end*/
 .page-text{
     padding: 10px 20px;
-}
-th{
-    text-align: center;
-}
-td{
-    padding: 3px 7px;
 }
 .rigth{
     float: right;
@@ -75,18 +97,18 @@ button[name='refresh'],div[title='列']>button{
     min-width: 40px;
     min-height: 30px;
 }
-
 .modal-content{
     background-color: #EAE8DF;
 }
-
 .common-page{
     padding-bottom: 20px;
 }
 .bg-one{
-    background: url('../images/header_bg.jpg') no-repeat, repeat fixed, fixed left 0, left top;
+    /*background: url('../images/header_bg.jpg') no-repeat, repeat fixed, fixed left 0, left top;*/
+    background: url('../images/login-bg.jpg') no-repeat, repeat fixed, fixed left 0, left top;
     background-size: cover;
     width: 100vw;
+    height: 100vh;
     margin: 0;
     padding: 0;
     overflow-y: hidden;
@@ -123,23 +145,6 @@ button[name='refresh'],div[title='列']>button{
     padding: 10px 10px;
     text-align: left;
 }
-
-/*通知栏开始*/
-.tips{
-    margin-top: -25px;
-    margin-bottom: 5px;
-    overflow: hidden;
-}
-.tips .tips-bg{
-    position: relative;
-    padding: 5px;
-}
-.tips .tips-bulls{
-    position: absolute;
-    left: 34px;
-    top: 6px;
-}
-/*通知栏结束*/
 /*具体栏目配置*/
 p{
     overflow: hidden;
@@ -382,4 +387,72 @@ footer .tooltip-inner{
     footer .col-md-1{
         display: none;
     }
+}
+/*动画效果*/
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+
+@-webkit-keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0)
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0)
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+.fadeInDown {
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown
+}
+@-webkit-keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0)
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0)
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+.fadeInUp {
+    -webkit-animation-name: fadeInUp;
+    animation-name: fadeInUp
 }

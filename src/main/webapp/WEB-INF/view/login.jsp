@@ -9,67 +9,59 @@
     <link rel="shortcut icon" href="${path}/static/images/favicon.ico">
     <link href="${path}/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="${path}/static/css/flat-ui.min.css" rel="stylesheet">
-    <link href="${path}/static/css/animate.min.css" rel="stylesheet">
-    <link href="${path}/static/css/app.css" rel="stylesheet">
-    <style>
-        td{
-            padding: 10px 5px;
-        }
-    </style>
+    <link href="${path}/static/css/login.css" rel="stylesheet">
 </head>
-<body  style="overflow-x: hidden">
-    <div class="bg-one" style="height: 100vh">
-        <div class="container-fluid text-center animated fadeInDown" style="margin-top: 5%">
-            <h1 class="logo-name">AUST</h1>
-            <h3>欢迎使用 Aust Code</h3>
-            <h4 class="text-danger showmsg">${error}</h4>
-        </div>
-        <div class="row animated fadeInUp">
-            <div class="col-lg-12">
-                <form role="form" style="margin-top: 20px" action="${pageContext.request.contextPath}/login" method="post">
-                    <table style="margin: 0 auto;min-width: 20vw" >
-                        <tr>
-                            <td  class="text-right"><strong>用户名:</strong>&nbsp;&nbsp;</td>
-                            <td ><input type="text" class="form-control" placeholder="Username" required name="username" value="${username}"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"><strong>密码:</strong>&nbsp;&nbsp;</td>
-                            <td><input type="password" class="form-control" placeholder="Password" required name="password"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"><strong>验证码:</strong>&nbsp;&nbsp;</td>
-                            <td><input type="text" class="form-control" required name="codevalidate" style="width: 40%;display: inline">
-                                <img id="codevalidate" src="/code/<%=new Date().getTime()%>" width="90" height="30" style="margin-left: 10px" onclick="changeUrl()">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"></td>
-                            <td><input type="checkbox" data-toggle="checkbox" value="" id="checkbox3" >
-                                Remember me</td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"></td>
-                            <td><a href="/register" class="btn btn-primary">注册</a>&nbsp;&nbsp;
-                                <button type="submit" class="btn btn-primary">登录</button></td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
+<body>
+<div class="bg-one">
+    <div class="small-home">
+        <a href="/index" class="text-center"><i class="glyphicon glyphicon-home"></i></a>
+    </div>
+    <div class="container-fluid text-center animated fadeInDown">
+        <h1 class="login-logo">AUST</h1>
+    </div>
+    <div class="row animated fadeInUp">
+        <h6 class="text-danger text-center">${error}</h6>
+        <div class="login-field">
+            <form role="form" action="${pageContext.request.contextPath}/login" method="post">
+                <div class="input-group form-group">
+                    <span class="input-group-addon glyphicon glyphicon-user"></span>
+                    <input type="text" class="form-control" placeholder="Username"
+                           required name="username" value="${username}" minlength="3" maxlength="20">
+                </div>
+                <div class="input-group form-group">
+                    <span class="input-group-addon glyphicon glyphicon-lock"></span>
+                    <input type="password" class="form-control"
+                           placeholder="Password" required name="password" minlength="6" maxlength="30">
+                </div>
+                <div class="code-inline">
+                        <input type="text" class="form-control code-input" required name="codevalidate">
+                        <img id="code-validate" src="/code/<%=new Date().getTime()%>" class="code-img" onclick="changeUrl()">
+                </div>
+                   <label class="checkbox" for="checkbox1">
+                       <input type="checkbox" data-toggle="checkbox" id="checkbox1" class="custom-checkbox" name="rmb_me" value="1">
+                       Remember me
+                   </label>
+                <div class="input-group">
+                    <a href="${pageContext.request.contextPath}/register" class="btn btn-primary">Register</a>&nbsp;&nbsp;
+                    <button type="submit" class="btn btn-primary sign-in">Sign in</button>
+                </div>
+            </form>
         </div>
     </div>
-    <script src="${path}/static/js/jquery.min.js"></script>
-    <script>
-        function jumpIndex() {
-            var href = window.location.href;
-            href = href.substr(0,href.length-6);
-            window.location.href = href;
-        }
-        function changeUrl() {
-            var url = $("#codevalidate").prop('src');
-            url = url.substr(0,url.lastIndexOf('/')+1);
-            url = url + (new Date()).valueOf();
-            $("#codevalidate").prop('src',url);
-        }
-    </script>
+</div>
+<script src="${path}/static/js/jquery.min.js"></script>
+<script src="${path}/static/js/flat-ui.min.js"></script>
+<script>
+    //启动复选框
+    $(':checkbox').radiocheck();
+
+    //点击更换验证码方法
+    function changeUrl() {
+        var url = $('#code-validate').prop('src');
+        url = url.substr(0,url.lastIndexOf('/')+1);
+        url = url + (new Date()).valueOf();
+        $("#code-validate").prop('src',url);
+    }
+</script>
 </body>
 </html>
