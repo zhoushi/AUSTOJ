@@ -1,11 +1,15 @@
 package cn.edu.aust.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 竞赛对应的实体类
  */
-public class Contest {
+public class Contest implements Serializable{
+
+    private static final long serialVersionUID = -2229517079645054233L;
+
     private int contest_id;
     private String title;
     private Date start_time;

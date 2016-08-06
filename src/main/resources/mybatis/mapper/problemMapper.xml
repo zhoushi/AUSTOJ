@@ -32,7 +32,7 @@
     <!--查找出对应目录的全部题目-->
     <select id="findCateProblem" parameterType="cn.edu.aust.util.PageUtil" resultType="cn.edu.aust.entity.Problem">
         <include refid="query_problem_table"/>
-        WHERE p.contest_id=0
+        WHERE p.contest_id=0 and
             <if test="stage != 0">
                 p.catelog = #{stage}
             </if>

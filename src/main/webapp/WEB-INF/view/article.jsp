@@ -10,8 +10,6 @@
     <link href="${path}/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="${path}/static/css/flat-ui.min.css" rel="stylesheet">
     <link href="${path}/static/css/font-awesome.min.css" rel="stylesheet">
-    <link href="${path}/static/css/bootstrap-table.min.css" rel="stylesheet">
-    <link href="${path}/static/css/animate.min.css" rel="stylesheet">
     <link href="${path}/static/css/app.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
 </head>

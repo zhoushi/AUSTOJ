@@ -2,9 +2,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <%
-        String webRoot = request.getContextPath();
-    %>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>起步</title>
@@ -13,7 +10,6 @@
     <link href="${path}/static/css/flat-ui.min.css" rel="stylesheet">
     <link href="${path}/static/css/font-awesome.min.css" rel="stylesheet">
     <link href="${path}/static/css/bootstrap-table.min.css" rel="stylesheet">
-    <link href="${path}/static/css/animate.min.css" rel="stylesheet">
     <link href="${path}/static/css/app.css" rel="stylesheet">
 </head>
 <body>
@@ -86,37 +82,8 @@
 <script src="${path}/static/js/app.js"></script>
 <script src="${path}/static/js/table-demo.js"></script>
 <script>
-    <%--判断用户是否已经完成该题,思路先用一个js数组,把用户完成题目存储起来,然后再判断--%>
-    var problem = new Array();
-    <c:forEach items="${sessionScope.userAC}" var="id">
-    problem.push(${id});
-    </c:forEach>
-    function contain(value) {
-        var i = problem.length;
-        while (i--){
-            if (problem[i] == value){
-                return true;
-            }
-        }
-        return false;
-    }
-    //更改题目ID
-    function problemid(value, row, index) {
-
-        if (contain(value)){
-            return [
-                '<div class="text-center">',
-                '<span class="text-primary"><i class="fa fa-thumbs-up"></i>' + value + '</span>',
-                '</div>'
-            ].join('');
-        }else {
-            return [
-                '<div class="text-center">',
-                '<span >' + value + '</span>',
-                '</div>'
-            ].join('');
-        }
-    }
+    <%--导入控制题目id的脚本--%>
+    <%@include file="../common/pro_js.jsp"%>
 </script>
 </body>
 </html>

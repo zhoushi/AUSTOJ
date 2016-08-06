@@ -44,7 +44,7 @@ $(function () {
             //使用$.each方法遍历返回的数据date,插入到id为#result中
             $.each(data,function(i,item){
                 var content=item.tag;
-                $(".widget .tags").append('<a href="/articlelist?search='+content+'" style="font-size: 12px;">'+content+'</a>');
+                $(".widget .tags").append('<a href="/articles?search='+content+'" style="font-size: 12px;">'+content+'</a>');
             })
         }
     });
@@ -61,7 +61,7 @@ $(function () {
             //使用$.each方法遍历返回的数据date,插入到id为#result中
             $.each(data,function(i,item){
                 var content=item.title;
-                $(".widget .article").append('<li><i class="fa fa-file-text-o"><a href="/article/'+item.id+'" target="_blank">&nbsp;&nbsp;'+content+'</a></i></li>');
+                $(".widget .article").append('<li><i class="fa fa-file-text-o"><a href="/articles/'+item.id+'" target="_blank">&nbsp;&nbsp;'+content+'</a></i></li>');
             })
         }
     });

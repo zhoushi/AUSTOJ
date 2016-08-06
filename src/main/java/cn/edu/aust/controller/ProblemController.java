@@ -42,15 +42,15 @@ public class ProblemController {
         return maps;
     }
     /**
-     * 查询出对应阶段的全部题目
+     * 查询出指定目录下全部题目
      * @param pageUtil
-     * @param stage
+     * @param catelog
      * @return
      */
-    @RequestMapping(value = "/findCateProblem/{stage}",method = RequestMethod.POST)
-    public @ResponseBody Map<String,Object> findCateProblem(@RequestBody PageUtil pageUtil,@PathVariable("stage") int stage){
+    @RequestMapping(value = "/findCateProblem/{catelog}",method = RequestMethod.POST)
+    public @ResponseBody Map<String,Object> findCateProblem(@RequestBody PageUtil pageUtil,@PathVariable("catelog") int catelog){
         Map<String,Object> maps = new HashMap<>();
-        pageUtil.setStage(stage);
+        pageUtil.setStage(catelog);
         PageHelper.startPage(pageUtil.getOffset()/pageUtil.getLimit()+1,pageUtil.getLimit());
         List<Problem> lists = problemDao.findCateProblem(pageUtil);
         PageInfo<Problem> info = new PageInfo<Problem>(lists);

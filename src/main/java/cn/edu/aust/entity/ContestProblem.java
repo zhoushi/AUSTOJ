@@ -1,9 +1,13 @@
 package cn.edu.aust.entity;
 
+import java.io.Serializable;
+
 /**
  * 保存竞赛题目的实体类,竞赛题目和普通题目有映射关系
  */
-public class ContestProblem {
+public class ContestProblem implements Serializable{
+
+    private static final long serialVersionUID = 3812071526486574268L;
 
     private int id;
 

@@ -1,9 +1,14 @@
 package cn.edu.aust.entity;
 
+import java.io.Serializable;
+
 /**
  * 用于封装错误信息的类
  */
-public class Error {
+public class Error implements Serializable{
+
+    private static final long serialVersionUID = -6783328378333152397L;
+
     private int errorcode;
 
     private String error;

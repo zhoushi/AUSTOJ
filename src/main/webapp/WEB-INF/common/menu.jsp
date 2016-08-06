@@ -21,7 +21,7 @@
             <li><a href="/master">进阶</a></li>
             <li><a href="/contest">比赛</a></li>
             <li><a href="/rank">排名</a></li>
-            <li><a href="/articlelist">干货</a></li>
+            <li><a href="/articles">干货</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">联系我们<b class="caret"></b></a>
                 <ul class="dropdown-menu animated fadeIn">

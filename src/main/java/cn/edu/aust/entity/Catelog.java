@@ -6,6 +6,9 @@ import java.io.Serializable;
  * 题目分类实体类
  */
 public class Catelog implements Serializable{
+
+    private static final long serialVersionUID = -2669844194483342263L;
+
     private int id;//标识
     private String catename;//目录名
 

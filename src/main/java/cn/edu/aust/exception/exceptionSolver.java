@@ -20,7 +20,7 @@ public class exceptionSolver implements HandlerExceptionResolver {
         logger.error("异常:",ex);
         logger.warn("==============异常结束=============");
         ModelAndView mv = new ModelAndView();
-        mv.addObject("error", ex.toString().replaceAll("\n", "<br/>"));
+        mv.addObject("error", ex.getMessage());
         mv.setViewName("error");
         return mv;
     }

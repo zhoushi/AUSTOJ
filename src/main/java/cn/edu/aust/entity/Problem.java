@@ -3,6 +3,9 @@ package cn.edu.aust.entity;
 import java.io.Serializable;
 
 public class Problem implements Serializable {
+
+    private static final long serialVersionUID = 1428278415533462742L;
+
     private Integer problem_id;
 
     private String title;

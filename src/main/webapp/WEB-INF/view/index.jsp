@@ -9,7 +9,6 @@
     <link href="${path}/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="${path}/static/css/flat-ui.min.css" rel="stylesheet">
     <link href="${path}/static/css/font-awesome.min.css" rel="stylesheet">
-    <link href="${path}/static/css/animate.min.css" rel="stylesheet">
     <link href="${path}/static/css/app.css" rel="stylesheet">
 </head>
 <body>
@@ -42,8 +41,8 @@
                                     <span class="input-group-btn">
                                         <button class="btn" type="submit" id="Signup">Sign Me Up!</button>
                                      </span>
-                            </div><!-- /input-group -->
-                        </div><!-- /.form-group -->
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

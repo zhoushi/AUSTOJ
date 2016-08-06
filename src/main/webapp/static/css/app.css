@@ -87,7 +87,7 @@ background-color: rgba(255,255,255,0.9);
 }
 button[name='refresh'],div[title='列']>button{
     color: #fff;
-    background-color: #1abc9c;
+    background-color: #6EAE97;
     padding: 10px 10px;
 }
 .fixed-table-pagination button,.fixed-table-pagination .pagination a{
@@ -183,6 +183,12 @@ p{
     margin-left: 70px;
     margin-bottom: 5px;
 }
+.articlempage .article-detail a{
+    color: #34495E;
+}
+.articlempage .article-detail a:hover{
+    color: #6EAE97;
+}
 .articlempage .article-detail>dt{
     overflow: hidden;
     text-overflow: ellipsis;
@@ -217,6 +223,7 @@ p{
 }
 .articlempage .article-footer>a:hover,.articlempage dd>a:hover{
     color: black;
+    font-weight: bold;
 }
 .articlempage .article-footer{
     margin-bottom: 15px;
@@ -455,4 +462,56 @@ footer .tooltip-inner{
 .fadeInUp {
     -webkit-animation-name: fadeInUp;
     animation-name: fadeInUp
+}
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}
+
+.fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn
+}
+@-webkit-keyframes fadeInRight {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0)
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+@keyframes fadeInRight {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(100%, 0, 0);
+        transform: translate3d(100%, 0, 0)
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none
+    }
+}
+
+.fadeInRight {
+    -webkit-animation-name: fadeInRight;
+    animation-name: fadeInRight
 }

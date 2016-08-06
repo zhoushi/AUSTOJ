@@ -1,5 +1,6 @@
 package cn.edu.aust.controller;
 
+import cn.edu.aust.exception.MyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -17,7 +18,7 @@ public class IndexController {
      * @return
      */
     @RequestMapping(value = "/index",method = RequestMethod.GET)
-    public String toIndex(){
+    public String toIndex() throws MyException {
         return "index";
     }
     /**

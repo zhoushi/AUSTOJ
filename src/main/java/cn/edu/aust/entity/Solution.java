@@ -8,6 +8,8 @@ import java.util.Date;
  */
 public class Solution implements Serializable{
 
+    private static final long serialVersionUID = -7116479259575073945L;
+
     private int solution_id;
     private int problem_id;
     private String title;

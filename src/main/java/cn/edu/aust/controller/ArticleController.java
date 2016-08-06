@@ -28,7 +28,7 @@ public class ArticleController {
     /**
      * 前往文章列表,可以附带搜索条件
      */
-    @RequestMapping(value = "/articlelist",method = RequestMethod.GET)
+    @RequestMapping(value = "/articles",method = RequestMethod.GET)
     public String toArticleList(Model model,PageUtil pageUtil){
         pageUtil.setLimit(8);
         PageHelper.startPage(pageUtil.getOffset(),pageUtil.getLimit());
@@ -53,7 +53,7 @@ public class ArticleController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/article/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/articles/{id}",method = RequestMethod.GET)
     public ModelAndView toArticleDetail(@PathVariable("id") int id){
         ModelAndView model = new ModelAndView();
         model.setViewName("article");

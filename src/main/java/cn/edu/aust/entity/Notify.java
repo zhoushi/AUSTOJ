@@ -6,6 +6,9 @@ import java.io.Serializable;
  * 具体通知对应的实体类
  */
 public class Notify implements Serializable {
+
+    private static final long serialVersionUID = 4835041655497944415L;
+
     private int id;
     private String notify_name;
     private int article_id;

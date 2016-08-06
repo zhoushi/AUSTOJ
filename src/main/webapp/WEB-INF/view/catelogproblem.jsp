@@ -81,5 +81,8 @@
 <script src="${path}/static/js/bootstrap-table-zh-CN.min.js"></script>
 <script src="${path}/static/js/app.js"></script>
 <script src="${path}/static/js/table-demo.js"></script>
+<script>
+    <%@include file="../common/pro_js.jsp"%>
+</script>
 </body>
 </html>

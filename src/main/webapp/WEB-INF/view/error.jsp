@@ -5,18 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404+1</title>
+    <title>404</title>
     <link rel="shortcut icon" href="${path}/static/images/favicon.ico">
     <link href="${path}/static/css/bootstrap.min.css" rel="stylesheet">
     <link href="${path}/static/css/flat-ui.min.css" rel="stylesheet">
-    <link href="${path}/static/css/animate.min.css" rel="stylesheet">
     <link href="${path}/static/css/font-awesome.min.css" rel="stylesheet">
-    <link href="${path}/static/css/app.css" rel="stylesheet">
-    <style>
-        td{
-            padding: 10px 5px;
-        }
-    </style>
+    <link href="${path}/static/css/login.css" rel="stylesheet">
 </head>
 <body  style="overflow-x: hidden">
     <div class="bg-one" style="height: 100vh">
@@ -30,10 +24,11 @@
             </c:if>
         </div>
         <div class="row animated fadeInUp">
-            <div class="col-lg-12 text-center">
+            <div class="input-group login-field">
                 <br/>
-                <a href="#" onClick="history.back(-1);" class="btn btn-primary"><i class="fa fa-backward"></i>&nbsp;&nbsp;上一页</a>
-                <a href="#" class="btn btn-primary"><i class="fa fa-home"></i>&nbsp;&nbsp;主页</a>
+                <a href="javascript:void(0);" onClick="history.back(-1);" class="btn btn-primary">
+                    <i class="fa fa-backward"></i>&nbsp;&nbsp;上一页</a>
+                <a href="/index" class="btn btn-primary"><i class="fa fa-home"></i>&nbsp;&nbsp;主页</a>
             </div>
         </div>
     </div>

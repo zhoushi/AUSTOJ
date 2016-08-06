@@ -6,6 +6,9 @@ import java.io.Serializable;
  * 对应SolutionSource的实体类
  */
 public class SolutionSource implements Serializable{
+
+    private static final long serialVersionUID = 6313715026527090493L;
+
     private int solution_id;
     private String source;
 

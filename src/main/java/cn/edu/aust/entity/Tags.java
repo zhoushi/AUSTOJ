@@ -6,6 +6,9 @@ import java.io.Serializable;
  * 侧边栏标签实体类
  */
 public class Tags implements Serializable {
+
+    private static final long serialVersionUID = 2400440387875934707L;
+
     private int id;//标识
     private String tag;//标签内容
     private int count;//点击次数
