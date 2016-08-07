@@ -9,7 +9,7 @@
 
 ###如何运行?
 ```
-1.  git clone https://github.com/hs-web/hsweb-framework.git
+1.  git clone https://github.com/nl101531/AUSTOJ.git
 2.  导入IDEA,选择Maven项目
 3.  导入数据库sql文件,修改db.properties数据库连接信息
 4.  在IDEA中为项目配置tomcat
