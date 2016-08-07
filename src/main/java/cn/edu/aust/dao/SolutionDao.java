@@ -26,7 +26,13 @@ public class SolutionDao {
         return sqlSessionTemplate.selectList("solutionMapper.findUserCmit",pageUtil);
     }
 
-    public int JudgePrepare(Solution solution, SolutionSource solutionSource){
+    /**
+     * 插入预判题数据
+     * @param solution
+     * @param solutionSource
+     * @return
+     */
+    public int InsertPrepare(Solution solution, SolutionSource solutionSource){
         sqlSessionTemplate.insert("solutionMapper.addSolution",solution);
         solutionSource.setSolution_id(solution.getSolution_id());
         sqlSessionTemplate.insert("solutionMapper.addSolutionSource",solutionSource);

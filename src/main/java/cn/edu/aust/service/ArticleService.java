@@ -3,6 +3,7 @@ package cn.edu.aust.service;
 import cn.edu.aust.dao.ArticleDao;
 import cn.edu.aust.entity.Article;
 import cn.edu.aust.util.FileUtil;
+import cn.edu.aust.util.PageUtil;
 import com.alibaba.fastjson.JSON;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
@@ -23,6 +24,32 @@ public class ArticleService implements InitializingBean{
 
     @Resource(name = "articleDao")
     private ArticleDao articleDao;
+
+    /**
+     * 得到侧边栏展示的最近文章
+     * @return
+     */
+    public List<Article> findAsideArticle(){
+        return articleDao.findAsideArticle();
+    }
+
+    /**
+     * 查找用于列表展示的文章
+     * @param pageUtil
+     * @return
+     */
+    public List<Article> findAllArticle(PageUtil pageUtil){
+        return articleDao.findAllArticle(pageUtil);
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public Article findArticleById(int id){
+        return articleDao.findArticleById(id);
+    }
 
     /**
      * 获取类别记录存放到本地磁盘

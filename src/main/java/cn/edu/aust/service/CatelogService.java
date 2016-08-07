@@ -19,7 +19,7 @@ import java.util.List;
 @Service("catelogService")
 public class CatelogService implements InitializingBean {
     //日志记录器
-    Logger logger = Logger.getLogger(CatelogService.class);
+    private static Logger logger = Logger.getLogger(CatelogService.class);
 
     @Resource(name = "catelogDao")
     private CatelogDao catelogDao;

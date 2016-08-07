@@ -131,7 +131,7 @@ function setverdict(value, row, index) {
     }
     return [
         '<div>',
-        '<span class="'+msg+'">' + value + '</>',
+        '<span class="'+msg+'">' + value + '</span>',
         '</div>'
     ].join('');
 }
@@ -139,7 +139,7 @@ function setverdict(value, row, index) {
 function setmemory(value, row, index) {
     return [
         '<div>',
-        '<span>' + toDecimal(value/1000) + '</>',
+        '<span>' + toDecimal(value/1000) + '</span>',
         '</div>'
     ].join('');
 }

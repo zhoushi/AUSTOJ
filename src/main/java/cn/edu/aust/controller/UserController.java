@@ -1,7 +1,7 @@
 package cn.edu.aust.controller;
 
-import cn.edu.aust.dao.UserDao;
 import cn.edu.aust.entity.User;
+import cn.edu.aust.service.UserService;
 import cn.edu.aust.util.FileUtil;
 import cn.edu.aust.util.PageUtil;
 import com.github.pagehelper.PageHelper;
@@ -29,8 +29,8 @@ public class UserController {
 
     private Logger logger = Logger.getLogger(UserController.class);
 
-    @Resource(name = "userDao")
-    private UserDao userDao;
+    @Resource(name = "userService")
+    private UserService userService;
 
     /**
      * 查询出用户排名
@@ -41,7 +41,7 @@ public class UserController {
     public @ResponseBody Map<String,Object> findUserRank(@RequestBody PageUtil pageUtil) throws Exception {
         Map<String,Object> maps = new HashMap<>();
         PageHelper.startPage(pageUtil.getOffset()/pageUtil.getLimit()+1,pageUtil.getLimit());
-        List<User> lists = userDao.findUserRank(pageUtil);
+        List<User> lists = userService.findUserRank(pageUtil);
         PageInfo<User> info = new PageInfo<>(lists);
         maps.put("total",info.getTotal());
         maps.put("rows",lists);
@@ -60,9 +60,9 @@ public class UserController {
         if (id <= 0){
             model.addObject("error","该用户不存在");
         }else {
-            User user = userDao.findUserById(id);
-            List<Integer> userAC = userDao.findUserACPro(id);
-            List<Integer> userBeingAC = userDao.findUserBeingAC(id);
+            User user = userService.findUserById(id);
+            List<Integer> userAC = userService.findUserACPro(id);
+            List<Integer> userBeingAC = userService.findUserBeingAC(id);
             userBeingAC.removeAll(userAC);
             model.addObject("user",user);
             model.addObject("userAC",userAC);
@@ -84,11 +84,11 @@ public class UserController {
             model.setViewName("error");
             return model;
         }
-        if (!userDao.updateUserById(user)){
+        if (!userService.updateUserById(user)){
             logger.error("用户自助更新用户资料失败:"+user.getUsername());
         }
         //更新session
-        user  = userDao.findUserById(user.getId());
+        user  = userService.findUserById(user.getId());
         session.setAttribute("userLogin",user);
         model.setViewName("redirect:/user/"+user.getId());
         return model;
@@ -117,9 +117,9 @@ public class UserController {
             FileUtil.saveImgToDisk(newFileDir,fileName,pictureFile);
             //更新到数据库
             user.setAvatar("/uploadimg/"+fileName);
-            userDao.updateImgById(user);
+            userService.updateImgById(user);
             //更新session
-            loginUser = userDao.findUserById(user.getId());
+            loginUser = userService.findUserById(user.getId());
             session.setAttribute("userLogin",loginUser);
             model.setViewName("redirect:/user/"+user.getId());
         } catch (IOException e) {

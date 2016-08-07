@@ -68,16 +68,16 @@
     </bean>
     <!--ehcache配置-->
     <!--配置ehcache的cacheManager-->
-    <bean id="cacheManagerFactory"
-          class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
-          p:configLocation="classpath:ehcache.xml"
-          p:cacheManagerName="cacheManager"
-    />
-    <!--配置基于ehcache的缓存管理器,
-        并把ehcache的cacheManager注入到Spring的EhCacheCacheManager-->
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheFactoryBean"
-          p:cacheManager-ref="cacheManagerFactory"
-    />
+    <!--<bean id="cacheManagerFactory"-->
+          <!--class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"-->
+          <!--p:configLocation="classpath:ehcache.xml"-->
+          <!--p:cacheManagerName="cacheManager"-->
+    <!--/>-->
+    <!--&lt;!&ndash;配置基于ehcache的缓存管理器,-->
+        <!--并把ehcache的cacheManager注入到Spring的EhCacheCacheManager&ndash;&gt;-->
+    <!--<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheFactoryBean"-->
+          <!--p:cacheManager-ref="cacheManagerFactory"-->
+    <!--/>-->
     <!--ehcache配置结束-->
 
         <!--配置事务管理 -->
@@ -106,4 +106,15 @@
         <aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
     </aop:config>
 
+    <!--任务执行器-->
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <!-- 核心线程数 -->
+        <property name="corePoolSize" value="5" />
+        <!-- 最大线程数 -->
+        <property name="maxPoolSize" value="50" />
+        <!-- 队列最大长度 -->
+        <property name="queueCapacity" value="1000" />
+        <!-- 线程池维护线程所允许的空闲时间，默认为60s -->
+        <property name="keepAliveSeconds" value="60" />
+    </bean>
 </beans>

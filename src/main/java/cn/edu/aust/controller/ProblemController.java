@@ -1,7 +1,7 @@
 package cn.edu.aust.controller;
 
-import cn.edu.aust.dao.ProblemDao;
 import cn.edu.aust.entity.Problem;
+import cn.edu.aust.service.ProblemService;
 import cn.edu.aust.util.PageUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,8 +21,8 @@ import java.util.Map;
 @RequestMapping(value = "/problem")
 public class ProblemController {
 
-    @Resource(name = "problemDao")
-    private ProblemDao problemDao;
+    @Resource(name = "problemService")
+    private ProblemService problemService;
 
     /**
      * 查询出对应阶段的全部题目
@@ -33,12 +33,16 @@ public class ProblemController {
     @RequestMapping(value = "/findStageProblem/{stage}",method = RequestMethod.POST)
     public @ResponseBody Map<String,Object> findStageProblem(@RequestBody PageUtil pageUtil,@PathVariable("stage") int stage){
         Map<String,Object> maps = new HashMap<>();
+        //开始分页
         pageUtil.setStage(stage);
         PageHelper.startPage(pageUtil.getOffset()/pageUtil.getLimit()+1,pageUtil.getLimit());
-        List<Problem> lists = problemDao.findStageProblem(pageUtil);
+
+        List<Problem> lists = problemService.findStageProblem(pageUtil);
+
         PageInfo<Problem> info = new PageInfo<Problem>(lists);
         maps.put("total",info.getTotal());
         maps.put("rows",lists);
+
         return maps;
     }
     /**
@@ -50,12 +54,15 @@ public class ProblemController {
     @RequestMapping(value = "/findCateProblem/{catelog}",method = RequestMethod.POST)
     public @ResponseBody Map<String,Object> findCateProblem(@RequestBody PageUtil pageUtil,@PathVariable("catelog") int catelog){
         Map<String,Object> maps = new HashMap<>();
+        //开始分页
         pageUtil.setStage(catelog);
         PageHelper.startPage(pageUtil.getOffset()/pageUtil.getLimit()+1,pageUtil.getLimit());
-        List<Problem> lists = problemDao.findCateProblem(pageUtil);
+
+        List<Problem> lists = problemService.findCateProblem(pageUtil);
         PageInfo<Problem> info = new PageInfo<Problem>(lists);
         maps.put("total",info.getTotal());
         maps.put("rows",lists);
+
         return maps;
     }
 
@@ -84,7 +91,7 @@ public class ProblemController {
         ModelAndView model = new ModelAndView();
         model.setViewName("problem");
         if (id>0){
-            Problem p = problemDao.findProblemById(id);
+            Problem p = problemService.findProblemById(id);
             if (p != null){
                 model.addObject("problem",p);
             }else {

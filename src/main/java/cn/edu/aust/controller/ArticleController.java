@@ -1,8 +1,9 @@
 package cn.edu.aust.controller;
 
-import cn.edu.aust.dao.ArticleDao;
 import cn.edu.aust.entity.Article;
+import cn.edu.aust.service.ArticleService;
 import cn.edu.aust.service.TagsService;
+import cn.edu.aust.util.Contants;
 import cn.edu.aust.util.PageUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,8 +22,8 @@ import java.util.List;
  */
 @Controller
 public class ArticleController {
-    @Resource(name = "articleDao")
-    private ArticleDao articleDao;
+    @Resource(name = "articleService")
+    private ArticleService articleService;
     @Resource(name = "tagsService")
     private TagsService tagsService;
     /**
@@ -30,19 +31,21 @@ public class ArticleController {
      */
     @RequestMapping(value = "/articles",method = RequestMethod.GET)
     public String toArticleList(Model model,PageUtil pageUtil){
-        pageUtil.setLimit(8);
+        //开始分页
+        pageUtil.setLimit(Contants.ARTICLE_NUM);
         PageHelper.startPage(pageUtil.getOffset(),pageUtil.getLimit());
-        List<Article> lists = articleDao.findAllArticle(pageUtil);
+
+        List<Article> lists = articleService.findAllArticle(pageUtil);
+
+        //分析结果
         PageInfo<Article> info = new PageInfo<>(lists);
         model.addAttribute("pageinfo",info);
+
         if (pageUtil.getSearch() != null){
             model.addAttribute("search",pageUtil.getSearch());
             //记录搜索内容
-            if (pageUtil.getSearch().length()-2 <= 8){
-                Thread t = new Thread(()->{
-                    tagsService.updateOrInsertTag(pageUtil.getSearch().substring(1,pageUtil.getSearch().length()-1));
-                });
-                t.start();
+            if (pageUtil.getSearch().length()-2 <= Contants.ARTICLE_SEARCH__NUM){
+               tagsService.updateOrInsertTag(pageUtil.getSearch().substring(1,pageUtil.getSearch().length()-1));
             }
         }
         return "articlelist";
@@ -60,7 +63,7 @@ public class ArticleController {
         if (id <= 0){
             model.addObject("error","该文章不存在");
         }else {
-            Article article = articleDao.findArticleById(id);
+            Article article = articleService.findArticleById(id);
             if (article != null){
                 model.addObject("article",article);
             }else {

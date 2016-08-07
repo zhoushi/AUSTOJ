@@ -1,13 +1,14 @@
 package cn.edu.aust.controller;
 
-import cn.edu.aust.dao.ContestDao;
 import cn.edu.aust.entity.Contest;
 import cn.edu.aust.entity.ContestProblem;
 import cn.edu.aust.entity.Problem;
 import cn.edu.aust.entity.User;
 import cn.edu.aust.service.ContestService;
+import cn.edu.aust.util.Contants;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +30,6 @@ import java.util.Map;
 @RequestMapping(value = "/contest")
 public class ContestController {
 
-    @Resource(name = "contestDao")
-    private ContestDao contestDao;
     @Resource(name = "contestService")
     private ContestService contestService;
 
@@ -41,12 +40,12 @@ public class ContestController {
     public ModelAndView toContest(Integer offset){
         ModelAndView model = new ModelAndView();
         model.setViewName("contest");
-        List<Contest> listsValid = contestDao.findContestByvalid();
+        List<Contest> listsValid = contestService.findContestByvalid();
         if(offset == null){
             offset = 1;
         }
-        PageHelper.startPage(offset,5);
-        List<Contest> listsInvalid = contestDao.findContestByInvalid();
+        PageHelper.startPage(offset, Contants.CONTEST_NUM);
+        List<Contest> listsInvalid = contestService.findContestByInvalid();
         PageInfo<Contest> info = new PageInfo<>(listsInvalid);
         model.addObject("listsValid",listsValid);
         model.addObject("info",info);
@@ -63,14 +62,14 @@ public class ContestController {
     @RequestMapping(value = "/{contest_id}/{type}",method = RequestMethod.POST)
     public @ResponseBody Map<String,Object> toContestJudeg(@PathVariable("contest_id") int contest_id, @PathVariable("type") int type, HttpSession session) throws IOException {
         Map<String,Object> model = new HashMap<>();
-        Contest contest = contestDao.findContestById(contest_id);
+        Contest contest = contestService.findContestById(contest_id);
 //        判断是否现在是比赛时间,前提比赛有效
-        if (contestService.JudgeTime(contest) == 1){
+        if (contestService.JudgeTime(contest) == Contants.CONTEST_UNSTART){
                 model.put("time",1);
                 return model;
         }
 //        判断是否有密码
-        if (contest.getPassword()== null || "".equals(contest.getPassword())){
+        if (StringUtils.isNotEmpty(contest.getPassword())){
             model.put("public",1);
             session.setAttribute("contest_id",contest_id);//得到授权
             return model;
@@ -89,14 +88,14 @@ public class ContestController {
     public ModelAndView toContestPub(@PathVariable("contest_id") int contest_id,@PathVariable("type") int type,HttpSession session){
         ModelAndView model = new ModelAndView();
         //时间检验
-        Contest contest = contestDao.findContestById(contest_id);
-       if (contestService.JudgeTime(contest) == 1){
+        Contest contest = contestService.findContestById(contest_id);
+       if (contestService.JudgeTime(contest) == Contants.CONTEST_UNSTART){
            model.setViewName("redirect:/contest");
            return model;
        }
 
 //        开始策略查找出一系列信息
-        List<ContestProblem> list = contestDao.findCPList(contest_id);
+        List<ContestProblem> list = contestService.findCPList(contest_id);
         //更改做过的题目状态
         contestService.packContest(list,contest_id,((User) session.getAttribute("userLogin")).getId());
 
@@ -117,8 +116,8 @@ public class ContestController {
     public @ResponseBody Map<String,Object> toContestPiv(int contest_id,String password,HttpSession session){
         Map<String,Object> model = new HashMap<>();
         //时间检验
-        Contest contest = contestDao.findContestById(contest_id);
-        if (contestService.JudgeTime(contest) == 1){
+        Contest contest = contestService.findContestById(contest_id);
+        if (contestService.JudgeTime(contest) == Contants.CONTEST_UNSTART){
             model.put("time",1);
             return model;
         }
@@ -142,12 +141,12 @@ public class ContestController {
                                         ){
         ModelAndView model = new ModelAndView();
         if (contest_id <= 0 || problem_id <= 0){
-            model.addObject("error","错误的访问地址");
+            model.addObject("error","题目不存在");
             model.setViewName("error");
             return model;
         }
         //时间检验
-        Contest contest = contestDao.findContestById(contest_id);
+        Contest contest = contestService.findContestById(contest_id);
         if (contestService.JudgeTime(contest) == 1){
             model.setViewName("redirect:/contest");
             return model;
@@ -156,7 +155,7 @@ public class ContestController {
         Map<String,Integer> maps = new HashMap<>();
         maps.put("contest_id",contest_id);
         maps.put("problem_id",problem_id);
-        Problem problem = contestDao.findProblemById(maps);
+        Problem problem = contestService.findProblemById(maps);
         model.addObject("problem",problem);
         model.addObject("consubmit",contest_id);
         model.setViewName("problem");
