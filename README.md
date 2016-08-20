@@ -1,5 +1,7 @@
 #AUSTOJ
 
+<font style="color:red">此项目不再更新,最近都改为springboot,做成前后端分离模式,便于后来人员接着开发,不过如果你正在学习SSM,此项目还是对你有很大帮助的</font>
+
 学习SSM框架时做的一个项目,主要实现类似OJ系统的在线判题,因为一个人写的,所以很多地方设计的不是很好,有问题可以发个Issues
 
 前台:Bootstrap+Flat-ui+jQuery
@@ -20,4 +22,5 @@
 判题服务器使用 https://github.com/weizengke/judge  
 
 项目演示:  http://mrdear.cn:8080/
+
 
