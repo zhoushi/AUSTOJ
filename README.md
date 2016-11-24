@@ -23,6 +23,6 @@
 
 判题服务器使用 https://github.com/weizengke/judge  
 
-项目演示:  http://mrdear.cn:8080/
+项目演示:  http://mrdear.cn:8080/austoj
 
 
